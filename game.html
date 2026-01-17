@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محيبس تيك توك PRO - النسخة الاحترافية السريعة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #ffd700; --neon-red: #ff003c; --bg-dark: #0a0a0a; --tiktok-cyan: #00f2ea; }
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            background: var(--bg-dark); 
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000 100%); 
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; margin: 0; color: white; overflow-x: hidden;
+            transition: background 0.3s ease;
+        }
+
+        /* أنميشن الاهتزاز عند الخسارة */
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            50% { transform: translate(-1px, 2px) rotate(1deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+        .lose-anim { animation: shake 0.5s; background-color: rgba(255, 0, 0, 0.2) !important; }
+        
+        /* أنميشن الاحتفال عند الفوز */
+        @keyframes winPulse {
+            0% { box-shadow: 0 0 0px var(--gold); }
+            50% { box-shadow: 0 0 50px var(--gold); }
+            100% { box-shadow: 0 0 0px var(--gold); }
+        }
+        .win-anim { background-color: rgba(255, 215, 0, 0.2) !important; animation: winPulse 0.5s 3; }
+
+        .instructions-side {
+            position: fixed; right: 30px; top: 50%; transform: translateY(-50%);
+            width: 280px; background: rgba(0,0,0,0.8); border: 3px solid var(--gold);
+            padding: 25px; border-radius: 30px; backdrop-filter: blur(15px);
+            font-size: 18px; box-shadow: 0 0 30px rgba(255,215,0,0.2);
+            z-index: 100; line-height: 1.6;
+        }
+        .instructions-side h4 { 
+            color: var(--gold); margin-top: 0; border-bottom: 2px solid var(--tiktok-cyan); 
+            padding-bottom: 10px; font-size: 24px; text-align: center;
+        }
+        .instructions-side ul { padding-right: 25px; margin: 0; list-style-type: disc; }
+        .instructions-side li { margin-bottom: 12px; color: #fff; font-weight: 700; }
+        .instructions-side b { color: var(--tiktok-cyan); font-size: 20px; }
+
+        .brand-header {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin-bottom: 25px; width: 100%;
+        }
+        .tiktok-box {
+            display: flex; align-items: center; gap: 12px; font-size: 32px; font-weight: 900;
+            color: white; text-shadow: 3px 3px var(--neon-red), -3px -3px var(--tiktok-cyan);
+        }
+        .live-indicator {
+            background: var(--neon-red); color: white; padding: 4px 15px; border-radius: 6px;
+            font-size: 16px; font-weight: 900; margin-bottom: 8px; animation: blinker 1s linear infinite;
+        }
+        @keyframes blinker { 50% { opacity: 0; } }
+
+        #start-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 2000; background: rgba(0,0,0,0.9);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            cursor: pointer;
+        }
+
+        .game-wrapper { 
+            width: 90%; max-width: 500px; background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(15px); padding: 25px; border-radius: 40px; 
+            border: 2px solid rgba(255,215,0,0.3); box-shadow: 0 0 60px rgba(0,0,0,0.5); 
+            text-align: center; position: relative; z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .stat-bar { 
+            display: flex; justify-content: space-around; background: rgba(0,0,0,0.6); 
+            padding: 12px; border-radius: 20px; border-bottom: 3px solid var(--tiktok-cyan); 
+            margin-bottom: 20px; font-size: 18px; 
+        }
+
+        .bubble-msg { 
+            min-height: 60px; display: flex; align-items: center; justify-content: center; 
+            background: white; color: black; border-radius: 15px; padding: 10px; 
+            font-weight: 900; font-size: 18px; margin-bottom: 20px; position: relative;
+        }
+
+        .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-bottom: 25px; }
+        .char-card { display: flex; flex-direction: column; align-items: center; cursor: pointer; position: relative; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        
+        .head { 
+            width: 75px; height: 75px; background: #ffe0bd; border-radius: 50%; 
+            border: 4px solid #333; display: flex; align-items: center; justify-content: center; 
+            z-index: 2; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .face-icon { font-size: 50px; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); transition: 0.3s; }
+        
+        .selected .head { 
+            transform: scale(1.15) translateY(-5px); 
+            border-color: var(--tiktok-cyan); 
+            box-shadow: 0 0 25px var(--tiktok-cyan); 
+            background: #fff;
+        }
+        .selected .face-icon { transform: scale(1.1); }
+
+        .dishdasha { width: 85px; height: 45px; background: #fff; border-radius: 15px 15px 5px 5px; margin-top: -8px; border: 1px solid #ddd; }
+        .num-tag { 
+            position: absolute; bottom: -8px; background: var(--gold); color: black; 
+            width: 26px; height: 26px; border-radius: 50%; font-size: 14px; 
+            font-weight: 900; border: 2px solid #000; z-index: 4; 
+        }
+
+        .eliminated { opacity: 0.1; filter: grayscale(1) blur(1px); pointer-events: none; }
+        .locked { filter: blur(4px); opacity: 0.4; pointer-events: none; }
+
+        .actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+        .btn { padding: 15px 5px; border: none; border-radius: 15px; font-weight: 900; font-size: 18px; cursor: pointer; transition: 0.2s; }
+        .btn-kick { background: #333; color: white; border-bottom: 4px solid #111; }
+        .btn-find { background: linear-gradient(45deg, #ff8c00, #ff4500); color: white; border-bottom: 4px solid #900; }
+        .btn-hint { background: var(--tiktok-cyan); color: #000; border-bottom: 4px solid #00aaa4; }
+        .btn:active { transform: translateY(3px); border-bottom-width: 0; }
+
+        .winner-ring { position: absolute; top: -45px; font-size: 45px; display: none; z-index: 10; }
+        .winner .winner-ring { display: block; animation: winJump 0.5s infinite; }
+        @keyframes winJump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        @media (max-width: 1000px) { .instructions-side { display: none; } }
+    </style>
+</head>
+<body onclick="activateAudio()">
+
+    <div class="instructions-side">
+        <h4>🎮 تعليمات اللعبة</h4>
+        <ul>
+            <li>قل <b>"الرقم"</b> (مثلاً: 6 أو ستة).</li>
+            <li>قل <b>"افتح"</b> لاستبعاد شخص.</li>
+            <li>قل <b>"بات"</b> لاختيار المحبس.</li>
+            <li>قل <b>"ساعدني"</b> لحذف خيار.</li>
+        </ul>
+    </div>
+
+    <div id="start-overlay">
+        <div class="brand-header">
+            <div class="live-indicator">LIVE</div>
+            <div class="tiktok-box">🎵 TikTok</div>
+            <div class="game-subtitle" style="color: var(--gold); margin-top:10px;">محيبس PRO المطور</div>
+        </div>
+        <h2 style="color:white; text-align:center; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 20px;">
+            انقر على الشاشة <br> <span style="color:var(--tiktok-cyan)">للبدء واللعب بصوتك</span>
+        </h2>
+    </div>
+
+    <div class="game-wrapper" id="game-container">
+        <div class="brand-header">
+            <div class="live-indicator">LIVE</div>
+            <div class="tiktok-box">🎵 TikTok</div>
+        </div>
+
+        <div class="stat-bar">
+            <div>🚩 جولة: <span id="round-txt">0</span>/5</div>
+            <div style="color:var(--gold)">🏆 فوز: <span id="wins-txt">0</span></div>
+            <div style="color:var(--neon-red)">💀 خسارة: <span id="loss-txt">0</span></div>
+        </div>
+
+        <div class="bubble-msg" id="ai-msg">اختر رقم المحبس.. 🎤</div>
+        
+        <div class="grid" id="game-grid"></div>
+
+        <div class="actions">
+            <button class="btn btn-kick" onclick="playAction('kick')">افتح 👐</button>
+            <button class="btn btn-hint" id="hint-btn" onclick="useVoiceHint()">مساعدة 💡</button>
+            <button class="btn btn-find" onclick="playAction('find')">بَات 💍</button>
+        </div>
+    </div>
+
+<script>
+    const audioKeepGoing = new Audio("تشجيع.mp3");
+    const audioWin = new Audio("فوز.mp3");
+    const audioLoss = new Audio("خسارة.mp3");
+
+    let winningId, selectedId = null, isLock = true, score = {w:0, l:0, r:0};
+    let hintUsedThisRound = false;
+    let recognition;
+
+    window.onload = () => { renderCharacters(true); };
+
+    function activateAudio() {
+        if (recognition) return;
+        document.getElementById('start-overlay').style.display = 'none';
+        score = {w:0, l:0, r:1}; 
+        initGameRound();
+        initSpeechEngine();
+    }
+
+    function initSpeechEngine() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) return;
+        recognition = new SpeechRecognition();
+        recognition.lang = 'ar-IQ'; 
+        recognition.continuous = true;
+        recognition.interimResults = true;
+
+        recognition.onresult = (event) => {
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    processVoiceCommand(event.results[i][0].transcript.trim());
+                }
+            }
+        };
+
+        recognition.onerror = (event) => { console.error("خطأ مايك:", event.error); };
+        recognition.onend = () => { recognition.start(); };
+        recognition.start();
+    }
+
+    function renderCharacters(isLocked) {
+        const grid = document.getElementById('game-grid');
+        grid.innerHTML = '';
+        const emojis = ["😊", "😎", "🧐", "😏", "😬", "😊", "🤠", "😇", "🤩", "😌"];
+        for (let i = 0; i < 10; i++) {
+            grid.innerHTML += `
+                <div class="char-card ${isLocked ? 'locked' : ''}" id="char-${i}" onclick="selectChar(${i})">
+                    <div class="winner-ring">💍</div>
+                    <div class="head"><div class="face-icon" id="face-${i}">${emojis[i]}</div></div>
+                    <div class="dishdasha"></div>
+                    <div class="num-tag">${i+1}</div>
+                </div>`;
+        }
+    }
+
+    function processVoiceCommand(text) {
+        if (isLock) return;
+        
+        const numMap = [
+            {id: 0, keywords: ["واحد", "1"]}, {id: 1, keywords: ["اثنين", "ثنين", "2"]},
+            {id: 2, keywords: ["ثلاث", "تلات", "3"]}, {id: 3, keywords: ["اربع", "4"]},
+            {id: 4, keywords: ["خمس", "5"]}, {id: 5, keywords: ["ست", "6"]},
+            {id: 6, keywords: ["سبع", "7"]}, {id: 7, keywords: ["ثمان", "8"]},
+            {id: 8, keywords: ["تسع", "9"]}, {id: 9, keywords: ["عشر", "10"]}
+        ];
+
+        numMap.forEach(item => {
+            item.keywords.forEach(word => {
+                if (text.includes(word)) selectChar(item.id);
+            });
+        });
+
+        if (text.includes("ساعدني")) useVoiceHint();
+        if (text.includes("افتح")) playAction('kick');
+        if (text.includes("بات")) playAction('find');
+    }
+
+    function initGameRound() {
+        isLock = false; selectedId = null; hintUsedThisRound = false;
+        winningId = Math.floor(Math.random() * 10);
+        
+        // إعادة الحالة الطبيعية للتصميم
+        const container = document.getElementById('game-container');
+        container.classList.remove('win-anim', 'lose-anim');
+        
+        updateStatsDisplay();
+        document.getElementById('hint-btn').style.opacity = "1";
+        document.getElementById('ai-msg').innerText = "وين المحبس؟ اسمع صوتك! 🎤";
+        renderCharacters(false);
+    }
+
+    function selectChar(id) {
+        if(isLock) return;
+        selectedId = id;
+        document.querySelectorAll('.char-card').forEach(c => c.classList.remove('selected'));
+        const charEl = document.getElementById('char-'+id);
+        if(charEl) charEl.classList.add('selected');
+    }
+
+    function useVoiceHint() {
+        if(isLock || hintUsedThisRound) return;
+        let options = [];
+        for(let i=0; i<10; i++) {
+            if(i !== winningId && i !== selectedId) options.push(i);
+        }
+        if(options.length > 0) {
+            let target = options[Math.floor(Math.random() * options.length)];
+            document.getElementById('char-'+target).classList.add('eliminated');
+            document.getElementById('face-'+target).innerText = "👐";
+            hintUsedThisRound = true;
+            document.getElementById('hint-btn').style.opacity = "0.3";
+        }
+    }
+
+    function playAction(type) {
+        if(selectedId === null || isLock) return;
+        if(type === 'kick') {
+            if(selectedId === winningId) {
+                gameOver(false); 
+            } else {
+                document.getElementById('char-'+selectedId).classList.add('eliminated');
+                document.getElementById('face-'+selectedId).innerText = "👐";
+                audioKeepGoing.currentTime = 0;
+                audioKeepGoing.play().catch(()=>{}); 
+                selectedId = null;
+                document.getElementById('ai-msg').innerText = "عفية! كمل الاستبعاد..";
+            }
+        } else {
+            gameOver(selectedId === winningId);
+        }
+    }
+
+    function gameOver(isWin) {
+        isLock = true;
+        const container = document.getElementById('game-container');
+        const winnerCard = document.getElementById('char-'+winningId);
+        
+        winnerCard.classList.add('winner');
+        document.getElementById('face-'+winningId).innerText = "😃";
+        
+        if(isWin) {
+            score.w++;
+            container.classList.add('win-anim'); // تفعيل أنميشن الفوز
+            audioWin.currentTime = 0;
+            audioWin.play().catch(()=>{}); 
+            document.getElementById('ai-msg').innerText = "كفووو! لقيته 💍";
+        } else {
+            score.l++;
+            container.classList.add('lose-anim'); // تفعيل أنميشن الخسارة
+            audioLoss.currentTime = 0;
+            audioLoss.play().catch(()=>{}); 
+            document.getElementById('ai-msg').innerText = "للاسف.. طار المحبس! 💀";
+        }
+        updateStatsDisplay();
+
+        setTimeout(() => {
+            if(score.r < 5) { 
+                score.r++; 
+                initGameRound(); 
+            } else {
+                finishGameSession();
+            }
+        }, 3000);
+    }
+
+    function updateStatsDisplay() {
+        document.getElementById('wins-txt').innerText = score.w;
+        document.getElementById('loss-txt').innerText = score.l;
+        document.getElementById('round-txt').innerText = score.r;
+    }
+
+    function finishGameSession() {
+        document.getElementById('ai-msg').innerText = "انتهت اللعبة! جاري إعادة التحميل..";
+        renderCharacters(true);
+        setTimeout(() => location.reload(), 4000);
+    }
+</script>
+</body>
+</html>
