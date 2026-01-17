@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبة الفيديو | د. هشام فؤاد</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #00b4d8;
+            --secondary-color: #0077b6;
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-color: #2d3436;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+        }
+
+        /* رأس صفحة ثابت وأصغر */
+        header {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        header h1 { margin: 0; color: var(--secondary-color); font-size: 1.3rem; }
+        header p { color: #636e72; margin-top: 5px; font-size: 0.9rem; }
+
+        .container {
+            max-width: 600px; /* عرض ضيق يناسب الهاتف */
+            margin: 15px auto;
+            padding: 0 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* مسافة صغيرة بين الأزرار */
+        }
+
+        /* تصميم الشريط المختصر */
+        .video-link-item {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 12px 15px; /* تقليل الحشو ليكون الشريط أقصر */
+            border-radius: 12px;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid #e0e0e0;
+            transition: background 0.2s;
+        }
+
+        .video-link-item:active {
+            background-color: #f0f0f0; /* تأثير عند الضغط باللمس */
+            transform: scale(0.98);
+        }
+
+        .icon-small {
+            width: 35px;
+            height: 35px;
+            background-color: #000;
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+
+        .content-small {
+            flex-grow: 1;
+        }
+
+        .content-small h3 {
+            margin: 0;
+            font-size: 0.95rem; /* خط أصغر للعناوين */
+            color: var(--text-color);
+            font-weight: 700;
+        }
+
+        .content-small p {
+            margin: 2px 0 0 0;
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        .chevron {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+            font-size: 0.75rem;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>د. هشام فؤاد</h1>
+    <p>وحدة علاج العقم وأمراض الذكورة</p>
+</header>
+
+<div class="container">
+    
+    <a href="https://www.tiktok.com/@dratyaf_centers/video/7596236477378465031" class="video-link-item" target="_blank">
+        <div class="icon-small"><i class="fab fa-tiktok"></i></div>
+        <div class="content-small">
+            <h3>تشخيص دوالي الخصيتين وتاثيرها على الوضع الانجابي</h3>
+            <p>تعرف على طرق الفحص الحديثة</p>
+        </div>
+        <div class="chevron"><i class="fas fa-chevron-left"></i></div>
+    </a>
+
+    <a href="https://www.tiktok.com/@dratyaf_centers/video/7594400749296127239" class="video-link-item" target="_blank">
+        <div class="icon-small"><i class="fab fa-tiktok"></i></div>
+        <div class="content-small">
+            <h3>اهمية حركة الحيوانات المنوية في اطفال انابيب</h3>
+            <p>شرح مبسط للدكتور هشام عن الحيوانات المنوية</p>
+        </div>
+        <div class="chevron"><i class="fas fa-chevron-left"></i></div>
+    </a>
+
+    <a href="https://www.tiktok.com/@dratyaf_centers/video/7590401334516567316" class="video-link-item" target="_blank">
+        <div class="icon-small"><i class="fab fa-tiktok"></i></div>
+        <div class="content-small">
+            <h3>افضل اجراء للحصول على الحيوانات المنوية من الحالة صفر</h3>
+            <p>دكتور هشام يتحدث عن التقنيات المستخدمة للحصول على حيوانات منوية</p>
+        </div>
+        <div class="chevron"><i class="fas fa-chevron-left"></i></div>
+    </a>
+<a href="https://www.tiktok.com/@dratyaf_centers/video/7590401334516567316" class="video-link-item" target="_blank">
+        <div class="icon-small"><i class="fab fa-tiktok"></i></div>
+        <div class="content-small">
+            <h3>ماهي البروتوكولات العلاجية المناسبة قبل التفتيش المايكروسكوبي</h3>
+            <p>دكتور هشام يتحدث عن البروتوكلات العلاجية</p>
+        </div>
+        <div class="chevron"><i class="fas fa-chevron-left"></i></div>
+    </a>
+
+<a href="https://www.tiktok.com/@dratyaf_centers/video/7588510608379694357?is_from_webapp=1&sender_device=pc&web_id=7596222633847391755" class="video-link-item" target="_blank">
+        <div class="icon-small"><i class="fab fa-tiktok"></i></div>
+        <div class="content-small">
+            <h3>افضل اجراء متبع للحصول على الحيوانات المنوية من الحالة صفر</h3>
+            <p>دكتور هشام يتحدث عن الاجرائات المتبعة</p>
+        </div>
+        <div class="chevron"><i class="fas fa-chevron-left"></i></div>
+    </a>
+<a href="https://www.tiktok.com/@dratyaf_centers/video/7587707686423104789"class="video-link-item" target="_blank">
+        <div class="icon-small"><i class="fab fa-tiktok"></i></div>
+        <div class="content-small">
+            <h3>ماهو الفرق بين سحب الابرة والتفتيش المايكروسكوبي</h3>
+            <p>دكتور هشام يتحدث عن الفروقات</p>
+        </div>
+        <div class="chevron"><i class="fas fa-chevron-left"></i></div>
+    </a>
+<a href="https://www.tiktok.com/@dratyaf_centers/video/7586602639207566612?is_from_webapp=1&sender_device=pc&web_id=7596222633847391755"class="video-link-item" target="_blank">
+        <div class="icon-small"><i class="fab fa-tiktok"></i></div>
+        <div class="content-small">
+            <h3>تحذير من النصب الطبي في مواقع التواصل الاجتماعي</h3>
+            <p>دكتور هشام يتحدث عن حالات النصب في مواقع التواصل الاجتماعي</p>
+        </div>
+        <div class="chevron"><i class="fas fa-chevron-left"></i></div>
+    </a>
+
+<a href="https://www.tiktok.com/@dratyaf_centers/video/7586602639207566612?is_from_webapp=1&sender_device=pc&web_id=7596222633847391755"class="video-link-item" target="_blank">
+        <div class="icon-small"><i class="fab fa-tiktok"></i></div>
+        <div class="content-small">
+            <h3> دكتور هشام يتحدث عن الخلل في جينات متلازمة كلاينفلتر</h3>
+            <p>دكتور هشام يتحدث عن خلل في متلازمة كلاينفلتر</p>
+        </div>
+        <div class="chevron"><i class="fas fa-chevron-left"></i></div>
+    </a>
+
+    
+</div>
+
+<footer>
+    &copy; 2026 د. هشام فؤاد - كافة الحقوق محفوظة
+</footer>
+
+</body>
+</html>
