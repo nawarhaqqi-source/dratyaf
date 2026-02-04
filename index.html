@@ -3,249 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتبة الفيديو | د. هشام فؤاد</title>
+    <title>عيادة د. هشام فؤاد الذكية</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         :root {
-            --primary-color: #00b4d8;
-            --secondary-color: #0077b6;
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-main: #2d3436;
-            --text-light: #636e72;
-            --whatsapp-color: #25D366;
+            --primary: #00b4d8; --secondary: #0077b6; --bg: #f4f7f6;
+            --white: #ffffff; --text: #2d3436; --glass: rgba(255, 255, 255, 0.8);
         }
+        * { box-sizing: border-box; scroll-behavior: smooth; }
+        body { font-family: 'Tajawal', sans-serif; background: var(--bg); margin: 0; color: var(--text); line-height: 1.6; }
 
-        * { box-sizing: border-box; }
-        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-color); margin: 0; padding: 0; color: var(--text-main); padding-bottom: 100px; }
+        /* Navigation */
+        nav { background: var(--white); padding: 15px; display: flex; justify-content: center; gap: 20px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        nav a { text-decoration: none; color: var(--secondary); font-weight: 700; font-size: 0.9rem; }
 
-        header {
-            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-            padding: 40px 20px 50px; text-align: center; color: white;
-            border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;
-            box-shadow: 0 10px 30px rgba(0, 119, 182, 0.25);
+        /* Header & Stats */
+        header { background: linear-gradient(135deg, var(--secondary), var(--primary)); padding: 60px 20px; text-align: center; color: white; border-bottom-left-radius: 50px; border-bottom-right-radius: 50px; }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 600px; margin: -30px auto 20px; padding: 0 15px; }
+        .stat-card { background: white; padding: 15px 5px; border-radius: 20px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .stat-card b { display: block; color: var(--secondary); font-size: 1.2rem; }
+
+        /* Smart Action Cards - التعديل هنا ليكون 3 أعمدة */
+        .actions { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); /* 3 أعمدة بجانب بعضها */
+            gap: 10px; 
+            max-width: 600px; 
+            margin: 20px auto; 
+            padding: 0 15px; 
         }
-
-        .stats-container {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 12px; max-width: 600px; margin: -25px auto 20px;
-            padding: 0 15px; position: relative; z-index: 30;
+        .btn-action { 
+            background: white; 
+            padding: 15px 5px; 
+            border-radius: 20px; 
+            text-align: center; 
+            text-decoration: none; 
+            color: inherit; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+            border: 1px solid #eee; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
         }
+        .btn-action:active { transform: scale(0.95); }
+        .btn-action i { font-size: 1.2rem; color: var(--primary); margin-bottom: 8px; }
+        .btn-action span { font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
 
-        .stat-item {
-            background: white; padding: 15px 5px; border-radius: 18px;
-            text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-        }
+        /* Featured Story Card */
+        .featured-box { max-width: 600px; margin: 30px auto; padding: 0 15px; }
+        .story-card { background: linear-gradient(135deg, var(--secondary), var(--primary)); border-radius: 25px; padding: 25px; color: white; display: flex; align-items: center; text-decoration: none; position: relative; overflow: hidden; box-shadow: 0 15px 30px rgba(0,119,182,0.3); }
+        .story-card i.play { font-size: 3rem; opacity: 0.3; position: absolute; left: 10px; }
 
-        .stat-number { display: block; font-size: 1.3rem; font-weight: 800; color: var(--secondary-color); }
-        .stat-number::after { content: '+'; font-size: 0.9rem; }
-        .stat-label { font-size: 0.7rem; color: var(--text-light); font-weight: 600; }
+        /* Video List Section */
+        section { max-width: 600px; margin: 40px auto; padding: 0 15px; }
+        .video-item { display: flex; align-items: center; background: white; padding: 15px; border-radius: 18px; text-decoration: none; color: inherit; margin-bottom: 12px; border: 1px solid #f0f0f0; }
+        .video-item .icon { width: 45px; height: 45px; background: #f8f9fa; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-left: 15px; color: #ff0000; }
+        .video-item h3 { margin: 0; font-size: 0.9rem; flex: 1; }
 
-        /* الفيديو المميز الاحترافي */
-        .special-story { max-width: 600px; margin: 20px auto 30px; padding: 0 15px; perspective: 1000px; }
-        .story-card {
-            position: relative; background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
-            border-radius: 30px; padding: 25px; display: flex; align-items: center;
-            text-decoration: none; color: white; overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 119, 182, 0.3); border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: 0.4s;
-        }
-        .story-card::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
-            animation: rotate-bg 6s linear infinite;
-        }
-        @keyframes rotate-bg { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .story-icon { width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-left: 15px; z-index: 2; backdrop-filter: blur(10px); }
-        .story-content { z-index: 2; }
-        .story-content h3 { margin: 0; font-size: 1.2rem; }
-        .story-content p { margin: 5px 0 0; font-size: 0.85rem; opacity: 0.9; }
+        /* Booking Form */
+        .form-box { background: white; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        input, select { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #eee; border-radius: 12px; font-family: inherit; font-size: 1rem; }
+        .submit-btn { width: 100%; padding: 18px; background: var(--secondary); color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; font-size: 1.1rem; }
 
-        .controls-container { max-width: 600px; margin: 0 auto 20px; padding: 0 15px; }
-        .search-box { background: white; border-radius: 20px; padding: 5px 15px; display: flex; align-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.05); margin-bottom: 15px; }
-        .search-box input { border: none; width: 100%; padding: 10px; font-family: inherit; outline: none; }
-        .filter-tags { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-        .tag { background: #fff; color: var(--text-light); padding: 8px 16px; border-radius: 25px; font-size: 0.8rem; font-weight: 600; white-space: nowrap; cursor: pointer; border: 1px solid #eee; }
-        .tag.active { background: var(--secondary-color); color: white; }
+        /* FAQ Section */
+        .faq-item { background: white; margin-bottom: 10px; border-radius: 12px; overflow: hidden; }
+        .faq-question { padding: 15px; cursor: pointer; display: flex; justify-content: space-between; font-weight: 700; border-bottom: 1px solid #f9f9f9; }
 
-        .container { max-width: 600px; margin: 0 auto; padding: 0 15px; display: flex; flex-direction: column; gap: 12px; }
-        .video-card { display: flex; align-items: center; background: white; padding: 15px; border-radius: 18px; text-decoration: none; color: inherit; border: 1px solid #f0f0f0; transition: 0.3s; }
-        .video-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
-        .icon-box { width: 45px; height: 45px; background: #000; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-left: 12px; flex-shrink: 0; }
-        .content-area h3 { margin: 0; font-size: 0.9rem; font-weight: 700; line-height: 1.4; }
-        .hash-tag { font-size: 0.7rem; color: var(--primary-color); font-weight: 700; background: #f0faff; padding: 2px 8px; border-radius: 5px; margin-top: 5px; display: inline-block; }
-
-        .floating-whatsapp { position: fixed; bottom: 25px; right: 25px; background: var(--whatsapp-color); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 5px 15px rgba(37,211,102,0.4); z-index: 1000; }
-        footer { text-align: center; padding: 20px; color: #bbb; font-size: 0.75rem; }
+        /* Floating WhatsApp */
+        .wa-float { position: fixed; bottom: 20px; right: 20px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 1000; }
+        
+        footer { text-align: center; padding: 40px; color: #999; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-<header>
+<nav>
+    <a href="#home">الرئيسية</a>
+    <a href="#videos">الفيديوهات</a>
+    <a href="#book">الحجز</a>
+    <a href="#faq">الأسئلة</a>
+</nav>
+
+<header id="home">
     <h1>د. هشام فؤاد</h1>
     <p>استشاري علاج العقم وأمراض الذكورة</p>
 </header>
 
-<div class="stats-container">
-    <div class="stat-item"><span class="stat-number" data-target="15">0</span><span class="stat-label">سنة خبرة</span></div>
-    <div class="stat-item"><span class="stat-number" data-target="5000">0</span><span class="stat-label">حالة معالجة</span></div>
-    <div class="stat-item"><span class="stat-number" data-target="3500">0</span><span class="stat-label">عملية ناجحة</span></div>
+<div class="stats">
+    <div class="stat-card"><b>15+</b>سنة خبرة</div>
+    <div class="stat-card"><b>5000+</b>حالة معالجة</div>
+    <div class="stat-card"><b>3500+</b>عملية ناجحة</div>
 </div>
 
-<div class="special-story">
+<div class="actions">
+    <a href="https://wa.me/9647837102093" class="btn-action">
+        <i class="fas fa-comment-dots"></i>
+        <span>استشارة فورية</span>
+    </a>
+    <a href="http://maps.google.com/?q=العنوان_هنا" class="btn-action">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>موقع العيادة</span>
+    </a>
+    <a href="#book" class="btn-action">
+        <i class="fas fa-calendar-check"></i>
+        <span>حجز موعد</span>
+    </a>
+</div>
+
+<div class="featured-box">
     <a href="https://www.tiktok.com/@dratyaf_centers/video/7577694888393854229" class="story-card" target="_blank">
-        <div class="story-badge">قصة نجاح</div>
-        <div class="story-icon"><i class="fas fa-baby"></i></div>
-        <div class="story-content">
-            <h3>قصة نجاح مميزة </h3>
-            <p>بعد انتظار 25 سنة.. شاهد القصة الكاملة مع الدكتور هشام فؤاد.</p>
+        <i class="fas fa-play play"></i>
+        <div style="z-index: 2;">
+            <small>قصة أمل مميزة</small>
+            <h2 style="margin: 5px 0;">نجاح بعد 25 سنة انتظار</h2>
+            <p style="margin: 0; font-size: 0.8rem; opacity: 0.9;">شاهد كيف تحول المستحيل إلى واقع مع الدكتور هشام.</p>
         </div>
     </a>
 </div>
 
-<div class="controls-container">
-    <div class="search-box"><input type="text" id="searchInput" placeholder="ابحث عن موضوع..."><i class="fas fa-search"></i></div>
-    <div class="filter-tags">
-        <div class="tag active" data-filter="all">الكل</div>
-        <div class="tag" data-filter="zero">الحالات الصفرية</div>
-        <div class="tag" data-filter="varicocele">دوالي الخصية</div>
-        <div class="tag" data-filter="advice">نصائح</div>
+<section id="videos">
+    <h2 style="text-align: center;">مكتبة التوعية الطبية</h2>
+    <div id="videoContainer">
+        <a href="https://www.tiktok.com/@dratyaf_centers/video/7596236477378465031" class="video-item" target="_blank">
+            <div class="icon"><i class="fab fa-tiktok"></i></div>
+            <h3>تشخيص دوالي الخصيتين وتأثيرها على الإنجاب</h3>
+        </a>
+        <a href="https://www.tiktok.com/@dratyaf_centers/video/7594400749296127239" class="video-item" target="_blank">
+            <div class="icon"><i class="fab fa-tiktok"></i></div>
+            <h3>أهمية حركة الحيوانات المنوية في الحقن المجهري</h3>
+        </a>
+        <a href="https://www.tiktok.com/@dratyaf_centers/video/7590401334516567316" class="video-item" target="_blank">
+            <div class="icon"><i class="fab fa-tiktok"></i></div>
+            <h3>أفضل إجراء للحصول على نطف من الحالة صفر</h3>
+        </a>
+        <a href="https://www.tiktok.com/@dratyaf_centers/video/7587707686423104789" class="video-item" target="_blank">
+            <div class="icon"><i class="fab fa-tiktok"></i></div>
+            <h3>الفرق بين سحب الإبرة والتفتيش المايكروسكوبي</h3>
+        </a>
+        <a href="https://www.tiktok.com/@dratyaf_centers/video/7589961283479391509" class="video-item" target="_blank">
+            <div class="icon"><i class="fab fa-tiktok"></i></div>
+            <h3>أفضل حل للتخلص من دوالي الخصيتين نهائياً</h3>
+        </a>
+        <a href="https://www.tiktok.com/@dratyaf_centers/video/7581804659526929684" class="video-item" target="_blank">
+            <div class="icon"><i class="fab fa-tiktok"></i></div>
+            <h3>التطورات الكبيرة في التفتيش المايكروسكوبي</h3>
+        </a>
+        <a href="https://www.tiktok.com/@dratyaf_centers/video/7578853300594920724" class="video-item" target="_blank">
+            <div class="icon"><i class="fab fa-tiktok"></i></div>
+            <h3>نجاح حالة عقم بسبب خصيتين هاجرتين</h3>
+        </a>
+        <a href="https://www.tiktok.com/@dratyaf_centers/video/7584850782093184277" class="video-item" target="_blank">
+            <div class="icon"><i class="fab fa-tiktok"></i></div>
+            <h3>أهمية تحليل تكسر المادة الوراثية (DNA)</h3>
+        </a>
+        <a href="https://www.tiktok.com/@dratyaf_centers/video/7576277591259106581" class="video-item" target="_blank">
+            <div class="icon"><i class="fab fa-tiktok"></i></div>
+            <h3>نصائح عامة لحالات تأخر الإنجاب</h3>
+        </a>
+        <a href="https://www.tiktok.com/@dratyaf_centers/video/7573757181766454549" class="video-item" target="_blank">
+            <div class="icon"><i class="fab fa-tiktok"></i></div>
+            <h3>عقم 12 سنة بسبب متلازمة كلاينفلتر</h3>
+        </a>
+        <a href="https://www.tiktok.com/@dratyaf_centers/video/7586602639207566612" class="video-item" target="_blank">
+            <div class="icon"><i class="fab fa-tiktok"></i></div>
+            <h3>تحذير من النصب الطبي في السوشيال ميديا</h3>
+        </a>
     </div>
-</div>
+</section>
 
-<div class="container" id="videoList">
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7596236477378465031" class="video-card" data-category="varicocele" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>تشخيص دوالي الخصيتين وتأثيرها على الإنجاب</h3><span class="hash-tag">#دوالي_الخصية</span></div>
-    </a>
+<section id="book">
+    <h2 style="text-align: center;">حجز موعد إلكتروني</h2>
+    <div class="form-box">
+        <input type="text" id="pName" placeholder="الاسم الكامل">
+        <input type="tel" id="pPhone" placeholder="رقم الهاتف المباشر">
+        <select id="pService">
+            <option value="دوالي الخصية">دوالي الخصية</option>
+            <option value="انعدام النطاف (صفر)">انعدام النطاف (صفر)</option>
+            <option value="أطفال أنابيب">أطفال أنابيب</option>
+            <option value="استشارة أخرى">استشارة أخرى</option>
+        </select>
+        <button class="submit-btn" onclick="sendToWhatsapp()">تأكيد الموعد عبر واتساب</button>
+    </div>
+</section>
 
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7594400749296127239" class="video-card" data-category="advice" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>أهمية حركة الحيوانات المنوية في أطفال الأنابيب</h3><span class="hash-tag">#أطفال_أنابيب</span></div>
-    </a>
+<section id="faq">
+    <h2 style="text-align: center;">الأسئلة الشائعة</h2>
+    <div class="faq-item">
+        <div class="faq-question">هل عملية الدوالي مجهرية؟ <i class="fas fa-chevron-down"></i></div>
+        <div style="padding: 15px; display: none; background: #fafafa;">نعم، يستخدم الدكتور هشام أحدث الميكروسكوبات الجراحية لضمان أعلى نسبة نجاح وأقل مضاعفات.</div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question">كم تستغرق فترة الاستشفاء؟ <i class="fas fa-chevron-down"></i></div>
+        <div style="padding: 15px; display: none; background: #fafafa;">غالباً ما يعود المريض لممارسة حياته الطبيعية خلال 48 إلى 72 ساعة.</div>
+    </div>
+</section>
 
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7590401334516567316" class="video-card" data-category="zero" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>أفضل إجراء للحصول على النطف من الحالة صفر</h3><span class="hash-tag">#الحالة_صفر</span></div>
-    </a>
+<a href="https://wa.me/9647837102093" class="wa-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
 
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7587707686423104789" class="video-card" data-category="zero" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>الفرق بين سحب الإبرة والتفتيش المايكروسكوبي</h3><span class="hash-tag">#تفتيش_مجهري</span></div>
-    </a>
-
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7586602639207566612" class="video-card" data-category="advice" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>تحذير من النصب الطبي في وسائل التواصل</h3><span class="hash-tag">#توعية_طبية</span></div>
-    </a>
-
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7589961283479391509" class="video-card" data-category="varicocele" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>أفضل حل للتخلص من دوالي الخصيتين نهائياً</h3><span class="hash-tag">#دوالي_الخصية</span></div>
-    </a>
-
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7581804659526929684" class="video-card" data-category="zero" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>التطورات الكبيرة في التفتيش المايكروسكوبي</h3><span class="hash-tag">#تقنيات_حديثة</span></div>
-    </a>
-
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7578853300594920724" class="video-card" data-category="zero" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>نجاح حالة عقم بسبب خصيتين هاجرتين</h3><span class="hash-tag">#قصص_نجاح</span></div>
-    </a>
-
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7584850782093184277" class="video-card" data-category="advice" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>أهمية تحليل تكسر المادة الوراثية (DNA)</h3><span class="hash-tag">#تحاليل_ذكورة</span></div>
-    </a>
-
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7579957588800867604" class="video-card" data-category="advice" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>شرح تفصيلي لأهمية تحليل السائل المنوي</h3><span class="hash-tag">#تحاليل</span></div>
-    </a>
-
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7576277591259106581" class="video-card" data-category="advice" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>نصائح دكتور هشام لحالات تأخر الإنجاب</h3><span class="hash-tag">#نصائح_طبية</span></div>
-    </a>
-
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7574458661251206421" class="video-card" data-category="zero" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>حالة مميزة لنسبة صفر وتحليل النتائج</h3><span class="hash-tag">#الحالة_صفر</span></div>
-    </a>
-
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7573757181766454549" class="video-card" data-category="zero" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>عقم 12 سنة بسبب متلازمة كلاينفلتر</h3><span class="hash-tag">#كلاينفلتر</span></div>
-    </a>
-
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7583645318042979589" class="video-card" data-category="advice" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>ما هي الفيتامينات الضرورية لتحسين جودة النطاف</h3><span class="hash-tag">#تحسين_الجودة</span></div>
-    </a>
-
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7582541284711386373" class="video-card" data-category="varicocele" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>دوالي الخصية والتدخل الجراحي الميكروسكوبي</h3><span class="hash-tag">#جراحة_مجهرية</span></div>
-    </a>
-
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7580693241255562502" class="video-card" data-category="zero" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>فرص الإنجاب في حالات انعدام الحيوانات المنوية</h3><span class="hash-tag">#الأمل</span></div>
-    </a>
-
-    <a href="https://www.tiktok.com/@dratyaf_centers/video/7575459312152431878" class="video-card" data-category="advice" target="_blank">
-        <div class="icon-box"><i class="fab fa-tiktok"></i></div>
-        <div class="content-area"><h3>أسئلة شائعة حول العقم عند الرجال وإجاباتها</h3><span class="hash-tag">#أسئلة_وأجوبة</span></div>
-    </a>
-</div>
-
-<a href="https://wa.me/9647837102093" class="floating-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i></a>
-<footer>&copy; 2026 د. هشام فؤاد - كافة الحقوق محفوظة</footer>
+<footer>
+    © 2026 عيادة الدكتور هشام فؤاد - كافة الحقوق محفوظة
+</footer>
 
 <script>
-    function animateCounters() {
-        const counters = document.querySelectorAll('.stat-number');
-        counters.forEach(counter => {
-            const target = +counter.getAttribute('data-target');
-            const inc = target / 100;
-            const updateCount = () => {
-                const count = +counter.innerText;
-                if (count < target) { counter.innerText = Math.ceil(count + inc); setTimeout(updateCount, 20); }
-                else { counter.innerText = target; }
-            };
-            updateCount();
-        });
+    function sendToWhatsapp() {
+        const name = document.getElementById('pName').value;
+        const phone = document.getElementById('pPhone').value;
+        const service = document.getElementById('pService').value;
+        
+        if(!name || !phone) { alert('يرجى ملء البيانات المطلوبة'); return; }
+        
+        const message = `طلب حجز موعد:%0Aالاسم: ${name}%0Aالهاتف: ${phone}%0Aالحالة: ${service}`;
+        window.open(`https://wa.me/964000000000?text=${message}`);
     }
 
-    const searchInput = document.getElementById('searchInput');
-    const videoCards = document.querySelectorAll('.video-card');
-    const tags = document.querySelectorAll('.tag');
-
-    function filterVideos() {
-        const query = searchInput.value.toLowerCase();
-        const activeFilter = document.querySelector('.tag.active').dataset.filter;
-        videoCards.forEach(card => {
-            const text = card.innerText.toLowerCase();
-            const cat = card.dataset.category;
-            const matchesSearch = text.includes(query);
-            const matchesFilter = activeFilter === 'all' || cat === activeFilter;
-            card.style.display = (matchesSearch && matchesFilter) ? 'flex' : 'none';
-        });
-    }
-
-    searchInput.addEventListener('input', filterVideos);
-    tags.forEach(tag => {
-        tag.addEventListener('click', () => {
-            tags.forEach(t => t.classList.remove('active'));
-            tag.classList.add('active');
-            filterVideos();
+    document.querySelectorAll('.faq-question').forEach(q => {
+        q.addEventListener('click', () => {
+            const answer = q.nextElementSibling;
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
         });
     });
-
-    window.onload = animateCounters;
 </script>
+
 </body>
 </html>
